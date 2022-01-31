@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.rc"
-version = "0.1.0"
+version = "0.1.1"
 val iOSBinaryName = "RCCachingManager"
 
 kotlin {
@@ -197,7 +197,7 @@ signing {
  * This task execution requires - pod trunk to be setup
  * pod trunk register <GIT_EMAIL_HAVING_ACCESS_TO_REPO> '<NAME>' --description='<DESCRIPTION>
  */
-tasks.register("publishiOSXCFramework") {
+tasks.register("prepareReleaseOfiOSXCFramework") {
     description = "Publish iOS framework to the Cocoa Repo"
 
     // Create Release Framework for Xcode
@@ -217,7 +217,7 @@ tasks.register("publishiOSXCFramework") {
             if (podcurrentLine?.trim()?.startsWith("spec.version") == true) {
                 podwriter.write("    spec.version       = \"${version}\"" + System.lineSeparator())
             } else if (podcurrentLine?.trim()?.startsWith("spec.source") == true) {
-                podwriter.write("    spec.source       = { :https => \"https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/${version}/${iOSBinaryName}.xcframework.zip\"}" + System.lineSeparator())
+                podwriter.write("    spec.source       = { :http => \"https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/${version}/${iOSBinaryName}.xcframework.zip\"}" + System.lineSeparator())
             } else {
                 podwriter.write(podcurrentLine + System.lineSeparator())
             }
@@ -238,6 +238,8 @@ tasks.register("publishiOSXCFramework") {
             if (cartcurrentLine?.trim()?.startsWith("{") == true) {
                 cartwriter.write("{"+ System.lineSeparator())
                 cartwriter.write("    \"${version}\":\"https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/${version}/${iOSBinaryName}.xcframework.zip\","+ System.lineSeparator())
+            } else if (cartcurrentLine?.trim()?.startsWith("\"${version}\"") == true) {
+                continue
             } else {
                 cartwriter.write(cartcurrentLine + System.lineSeparator())
             }
@@ -282,18 +284,20 @@ tasks.register("publishiOSXCFramework") {
         spmwriter.close()
         spmreader.close()
         spmtempFile.renameTo(spmdir)
+    }
+}
 
-        // Publish to GitHub Release
-        project.exec {
-            workingDir = File("$rootDir")
-            commandLine("gh", "release", "create", "${version}", "--draft", "--generate-notes", "--target develop", "'${iOSBinaryName}.xcframework.zip#${iOSBinaryName}.xcframework.${version}'").standardOutput
-        }
+tasks.register("publishiOSXCFramework") {
+    // Publish to GitHub Release
+    project.exec {
+        workingDir = File("$rootDir")
+        commandLine("gh", "release", "create", "${version}", "'${iOSBinaryName}.xcframework.zip#${iOSBinaryName}.xcframework.${version}'", "--draft", "--generate-notes").standardOutput
+    }
 
-        // Publish to CocoaPod Trunk
-        project.exec {
-            workingDir = File("$rootDir")
-            commandLine("pod", "trunk", "push", "${iOSBinaryName}.podspec", "--verbose", "--allow-warnings").standardOutput
-        }
+    // Publish to CocoaPod Trunk
+    project.exec {
+        workingDir = File("$rootDir")
+        commandLine("pod", "trunk", "push", "${iOSBinaryName}.podspec", "--verbose", "--allow-warnings").standardOutput
     }
 }
 

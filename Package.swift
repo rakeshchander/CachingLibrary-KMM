@@ -19,8 +19,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "RCCachingManager",
-    url: "https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/0.1.0/RCCachingManager.xcframework.zip",
-    checksum: "42a345a7dc57c3f44f99e429062f06d92c217d50f9681c60e4daf0bfacde8011"
+    url: "https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/0.1.1/RCCachingManager.xcframework.zip",
+    checksum: "78c7c42f148d143813c19161eb1ef6975c2da10cdb01bb35ea94f9c0bb0a3b4a"
         ),
     ]
 )
