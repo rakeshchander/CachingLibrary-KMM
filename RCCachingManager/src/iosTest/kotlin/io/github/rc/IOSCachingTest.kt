@@ -1,0 +1,47 @@
+package io.github.rc
+
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonPrimitive
+import kotlin.test.Test
+import kotlin.test.assertTrue
+
+class IOSCachingTest {
+
+    @Test
+    fun testActualLayer() {
+
+        val cachingMgr = CachingImpl
+
+        assertTrue(cachingMgr.getLayer() is CachingIOS)
+
+    }
+
+    @Test
+    fun testCachingIOSFileName() {
+        val manager = CachingIOS()
+
+        val fileName = "rc-sample.txt"
+
+        val filePath = manager.getTargetFile(fileName)
+
+        assertTrue(filePath.startsWith("/Users"))
+        assertTrue(filePath.endsWith(fileName))
+    }
+
+    @Test
+    fun testCachingIOS() {
+        val manager = CachingIOS()
+
+        val fileName = "rc-sample.txt"
+
+        manager.saveContent(fileName, JsonPrimitive("Test"))
+
+        val fileContents = manager.getContent(fileName)
+
+        assertTrue(fileContents != null)
+        assertTrue(fileContents.jsonPrimitive.content == "Test")
+    }
+
+
+
+}
