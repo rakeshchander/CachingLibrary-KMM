@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.rc"
-version = "0.1.1"
+version = "0.1.2"
 val iOSBinaryName = "RCCachingManager"
 
 kotlin {
@@ -291,7 +291,7 @@ tasks.register("publishiOSXCFramework") {
     // Publish to GitHub Release
     project.exec {
         workingDir = File("$rootDir")
-        commandLine("gh", "release", "create", "${version}", "'${iOSBinaryName}.xcframework.zip#${iOSBinaryName}.xcframework.${version}'", "--draft", "--generate-notes").standardOutput
+        commandLine("gh", "release", "create", "${version}", "--draft", "--generate-notes", "\"${iOSBinaryName}.xcframework.zip#${iOSBinaryName}.xcframework.${version}\"").standardOutput
     }
 
     // Publish to CocoaPod Trunk
