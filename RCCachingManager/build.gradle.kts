@@ -288,11 +288,6 @@ tasks.register("prepareReleaseOfiOSXCFramework") {
 }
 
 tasks.register("publishiOSXCFramework") {
-    // Publish to GitHub Release
-    project.exec {
-        workingDir = File("$rootDir")
-        commandLine("gh", "release", "create", "${version}", "--draft", "--generate-notes", "\"${iOSBinaryName}.xcframework.zip#${iOSBinaryName}.xcframework.${version}\"").standardOutput
-    }
 
     // Publish to CocoaPod Trunk
     project.exec {
@@ -305,8 +300,7 @@ tasks.register("publishiOSXCFramework") {
  * Task to create zip for XCFramework
  * To be used by Carthage for Distribution as Binary
  */
-tasks.register<Zip>("packageDistribution") {
-
+tasks.create<Zip>("packageDistribution") {
     // Delete existing XCFramework
     delete("$rootDir/XCFramework")
 
