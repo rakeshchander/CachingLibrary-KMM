@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.rc"
-version = "0.1.2"
+version = "1.0.0"
 val iOSBinaryName = "RCCachingManager"
 
 kotlin {
@@ -322,9 +322,9 @@ tasks.create<Zip>("packageDistribution") {
 
 /**
  * Task
- * Publish GrowthBook
+ * Publish RCCachingLibrary
  */
-tasks.register("publishGrowthBook"){
+tasks.register("publishCachingLibrary"){
 
     // Publish Kotlin Library version for Android & JAVA - MavenCentral
     dependsOn("publish")

@@ -77,12 +77,12 @@ internal class CachingIOS : CachingLayer {
             true
         ).first() as? String
         // Append Folder name
-        val targetFolderPath = directoryPath + "GrowthBook-KMM"
+        val targetFolderPath = directoryPath + "RCCachingLibrary-KMM"
 
         val fileManager = NSFileManager.defaultManager
         // Check if folder exists
         if (!fileManager.fileExistsAtPath(targetFolderPath)) {
-            // Create folder for GrowthBook
+            // Create folder for RCCachingLibrary
             fileManager.createDirectoryAtURL(
                 NSURL.fileURLWithPath(targetFolderPath),
                 true,
