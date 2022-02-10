@@ -81,7 +81,7 @@ internal class CachingAndroid : CachingLayer {
         if (context != null) {
             val path = context!!.getFilesDir()
             // Create Directory in Internal Memory
-            val letDirectory = File(path, "GrowthBook-KMM")
+            val letDirectory = File(path, "RCCachingLibrary-KMM")
             letDirectory.mkdirs()
             var targetFileName = fileName
             if (fileName.endsWith(".txt", true)) {
