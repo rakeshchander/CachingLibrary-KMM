@@ -4,25 +4,17 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-/**
- * Actual Implementation for Caching in Android - As expected in KMM
- */
-internal actual object RCUserPreferencesImpl {
-    actual fun getLayer() : RCUserPreferences {
-        return RCUserPreferencesAndroid()
-    }
-}
 
 /**
  * Android Caching Layer
  */
-internal class RCUserPreferencesAndroid : RCUserPreferences {
+actual class RCUserPreferences actual constructor() {
 
     companion object{
         var context : Context? = null
     }
 
-    override fun <T> setPrefValue(keyName: String, value: T) {
+    actual fun <T> setPrefValue(keyName: String, value: T) {
 
         if (context != null) {
             val prefs : SharedPreferences = context!!.getSharedPreferences("", MODE_PRIVATE)
@@ -58,7 +50,7 @@ internal class RCUserPreferencesAndroid : RCUserPreferences {
         throw Exception("Context Not Initialized")
     }
 
-    override fun deletePref(keyName: String) {
+    actual fun deletePref(keyName: String) {
         if (context != null) {
             val prefs : SharedPreferences = context!!.getSharedPreferences("", MODE_PRIVATE)
             val editor = prefs.edit()
@@ -71,9 +63,9 @@ internal class RCUserPreferencesAndroid : RCUserPreferences {
 
 }
 
-internal actual inline fun <reified T> RCUserPreferences.getPrefValue(keyName: String): T? {
-    if (RCUserPreferencesAndroid.context != null) {
-        val prefs : SharedPreferences = RCUserPreferencesAndroid.context!!.getSharedPreferences("", MODE_PRIVATE)
+actual inline fun <reified T> RCUserPreferences.getPrefValue(keyName: String): T? {
+    if (RCUserPreferences.context != null) {
+        val prefs : SharedPreferences = RCUserPreferences.context!!.getSharedPreferences("", MODE_PRIVATE)
 
         return when (T::class.java) {
             Boolean::class.java -> prefs.getBoolean(keyName, false) as T

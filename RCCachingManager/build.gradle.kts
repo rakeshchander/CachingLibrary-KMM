@@ -6,11 +6,11 @@ plugins {
     kotlin("plugin.serialization")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "1.4.20"
+    id("org.jetbrains.dokka") version "1.6.10"
 }
 
-group = "io.github.rc"
-version = "1.0.0"
+group = "io.github.rakeshchander"
+version = "1.1.0"
 val iOSBinaryName = "RCCachingManager"
 
 kotlin {
@@ -289,14 +289,14 @@ tasks.register("prepareReleaseOfiOSXCFramework") {
     }
 }
 
-tasks.register("publishiOSXCFramework") {
-
-    // Publish to CocoaPod Trunk
-    project.exec {
-        workingDir = File("$rootDir")
-        commandLine("pod", "trunk", "push", "${iOSBinaryName}.podspec", "--verbose", "--allow-warnings").standardOutput
-    }
-}
+//tasks.register("publishiOSXCFramework") {
+//
+//    // Publish to CocoaPod Trunk
+//    project.exec {
+//        workingDir = File("$rootDir")
+//        commandLine("pod", "trunk", "push", "${iOSBinaryName}.podspec", "--verbose", "--allow-warnings").standardOutput
+//    }
+//}
 
 /**
  * Task to create zip for XCFramework
@@ -326,11 +326,11 @@ tasks.create<Zip>("packageDistribution") {
  * Task
  * Publish RCCachingLibrary
  */
-tasks.register("publishCachingLibrary"){
-
-    // Publish Kotlin Library version for Android & JAVA - MavenCentral
-    dependsOn("publish")
-    // Publish XCFramework on CocoaPods, Carthage, SwiftPackageManager
-    dependsOn("publishiOSXCFramework")
-
-}
+//tasks.register("publishCachingLibrary"){
+//
+//    // Publish Kotlin Library version for Android & JAVA - MavenCentral
+//    dependsOn("publish")
+//    // Publish XCFramework on CocoaPods, Carthage, SwiftPackageManager
+//    dependsOn("publishiOSXCFramework")
+//
+//}

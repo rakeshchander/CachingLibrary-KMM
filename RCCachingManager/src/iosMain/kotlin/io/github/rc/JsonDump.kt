@@ -1,32 +1,20 @@
 package io.github.rc
 
-import io.github.rc.string
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import platform.Foundation.*
-
-/**
- * Setting up Actual Caching Implementation Object
- */
-internal actual object CachingImpl {
-    actual fun getLayer() : CachingLayer {
-        return CachingIOS()
-    }
-}
 
 /**
  * This is actual implementation of Caching Layer in iOS
  */
-internal class CachingIOS : CachingLayer {
+actual class CachingLayer actual constructor() {
 
-    private val json = Json { prettyPrint = true; isLenient = true; ignoreUnknownKeys = true }
+    init {
+        // For Public Access
+    }
 
     /**
      * Save content in iOS Sandbox
      */
-    override fun saveContent(fileName: String, content: JsonElement){
+    actual fun saveContent(fileName: String, content: String){
         val fileManager = NSFileManager.defaultManager
 
         // Get File Path
@@ -38,7 +26,7 @@ internal class CachingIOS : CachingLayer {
             fileManager.removeItemAtURL(fileURL, null)
         }
         // Convert contents to NSDATA
-        val jsonContents = json.encodeToString(content).nsdata()
+        val jsonContents = content.nsdata()
 
         // Write contents in file
         fileManager.createFileAtPath(filePath, jsonContents, null)
@@ -48,7 +36,7 @@ internal class CachingIOS : CachingLayer {
     /**
      * Get Content from iOS Sandbox
      */
-    override fun getContent(fileName: String) : JsonElement?{
+    actual fun getContent(fileName: String) : String?{
         val fileManager = NSFileManager.defaultManager
 
         // Get File Path
@@ -57,9 +45,9 @@ internal class CachingIOS : CachingLayer {
         // Check if file exists
         if (fileManager.fileExistsAtPath(filePath)){
             // Read File Contents
-            val jsonContents = fileManager.contentsAtPath(filePath)?.string()
             // If file contents exists, convert them to JsonElement and return
-            return jsonContents?.let { json.decodeFromString(it) }
+            return fileManager.contentsAtPath(filePath)?.string()
+
         }
 
         // Return null

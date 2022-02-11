@@ -26,22 +26,12 @@ class AndroidCachingTest {
 
         Mockito.`when`(mMockContext!!.filesDir).thenReturn(mTempFolder.newFolder())
 
-        CachingAndroid.context = mMockContext
-    }
-
-
-    @Test
-    fun testActualLayer() {
-
-        val cachingMgr = CachingImpl
-
-        kotlin.test.assertTrue(cachingMgr.getLayer() is CachingAndroid)
-
+        CachingLayer.context = mMockContext
     }
 
     @Test
     fun testCachingAndroidFileName() {
-        val manager = CachingAndroid()
+        val manager = CachingLayer()
 
         val fileName = "rc-sample.txt"
 
@@ -52,16 +42,16 @@ class AndroidCachingTest {
 
     @Test
     fun testCachingAndroid() {
-        val manager = CachingAndroid()
+        val manager = CachingLayer()
 
         val fileName = "rc-sample.txt"
 
-        manager.saveContent(fileName, JsonPrimitive("Test"))
+        manager.saveContent(fileName, "Test")
 
         val fileContents = manager.getContent(fileName)
 
         kotlin.test.assertTrue(fileContents != null)
-        kotlin.test.assertTrue(fileContents.jsonPrimitive.content == "Test")
+        kotlin.test.assertTrue(fileContents == "Test")
     }
 
 }

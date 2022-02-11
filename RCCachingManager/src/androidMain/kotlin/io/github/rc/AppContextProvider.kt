@@ -9,8 +9,8 @@ import androidx.startup.Initializer
  */
 class AppContextProvider : Initializer<Context> {
     override fun create(context: Context) : Context {
-        CachingAndroid.context = context
-        RCUserPreferencesAndroid.context = context
+        CachingLayer.context = context
+        RCUserPreferences.context = context
         return context
     }
     override fun dependencies(): List<Class<out Initializer<*>>> {

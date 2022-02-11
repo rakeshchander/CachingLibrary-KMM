@@ -4,19 +4,10 @@ import platform.Foundation.NSUserDefaults
 import platform.darwin.NSInteger
 
 /**
- * Setting up Actual Caching Implementation Object
- */
-internal actual object RCUserPreferencesImpl {
-    actual fun getLayer() : RCUserPreferences {
-        return RCUserPreferencesIOS()
-    }
-}
-
-/**
  * This is actual implementation of Caching Layer in iOS
  */
-internal class RCUserPreferencesIOS : RCUserPreferences {
-    override fun <T> setPrefValue(keyName: String, value: T) {
+actual class RCUserPreferences actual constructor() {
+    actual fun <T> setPrefValue(keyName: String, value: T) {
 
         if (value is NSInteger) {
             NSUserDefaults.standardUserDefaults.setInteger(value, keyName)
@@ -46,13 +37,13 @@ internal class RCUserPreferencesIOS : RCUserPreferences {
         throw Exception("Unhandled data type")
     }
 
-    override fun deletePref(keyName: String) {
+    actual fun deletePref(keyName: String) {
         val prefs : NSUserDefaults = NSUserDefaults.standardUserDefaults
         prefs.removeObjectForKey(keyName)
     }
 }
 
-internal actual inline fun <reified T> RCUserPreferences.getPrefValue(keyName: String): T? {
+actual inline fun <reified T> RCUserPreferences.getPrefValue(keyName: String): T? {
     val prefs : NSUserDefaults = NSUserDefaults.standardUserDefaults
 
     return when (T::class) {

@@ -8,17 +8,8 @@ import kotlin.test.assertTrue
 class IOSCachingTest {
 
     @Test
-    fun testActualLayer() {
-
-        val cachingMgr = CachingImpl
-
-        assertTrue(cachingMgr.getLayer() is CachingIOS)
-
-    }
-
-    @Test
     fun testCachingIOSFileName() {
-        val manager = CachingIOS()
+        val manager = CachingLayer()
 
         val fileName = "rc-sample.txt"
 
@@ -30,16 +21,16 @@ class IOSCachingTest {
 
     @Test
     fun testCachingIOS() {
-        val manager = CachingIOS()
+        val manager = CachingLayer()
 
         val fileName = "rc-sample.txt"
 
-        manager.saveContent(fileName, JsonPrimitive("Test"))
+        manager.saveContent(fileName, "Test")
 
         val fileContents = manager.getContent(fileName)
 
         assertTrue(fileContents != null)
-        assertTrue(fileContents.jsonPrimitive.content == "Test")
+        assertTrue(fileContents == "Test")
     }
 
 
