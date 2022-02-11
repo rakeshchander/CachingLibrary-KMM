@@ -1,40 +1,22 @@
 package io.github.rc
 
 import android.content.Context
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import java.io.File
 import java.io.FileInputStream
 
 /**
- * Actual Implementation for Caching in Android - As expected in KMM
- */
-actual internal object CachingImpl {
-    actual fun getLayer() : CachingLayer {
-        return CachingAndroid()
-    }
-}
-
-/**
  * Android Caching Layer
  */
-internal class CachingAndroid : CachingLayer {
+actual class RCCachingManager actual constructor() {
 
     companion object{
         var context : Context? = null
     }
 
     /**
-     * JSON Parser SetUp
-     */
-    val json = Json { prettyPrint = true; isLenient = true; ignoreUnknownKeys = true }
-
-    /**
      * Save Content in Android App Specific Internal Memory
      */
-    override fun saveContent(fileName: String, content: JsonElement){
+    actual fun saveContent(fileName: String, content: String){
         val file = getTargetFile(fileName)
 
         if (file != null) {
@@ -46,10 +28,8 @@ internal class CachingAndroid : CachingLayer {
             // Create New File
             file.createNewFile()
 
-            val jsonContents = json.encodeToString(content)
-
             // Save contents in file
-            file.appendText(jsonContents)
+            file.appendText(content)
         }
 
 
@@ -58,15 +38,14 @@ internal class CachingAndroid : CachingLayer {
     /**
      * Retrieve Content from Android App Specific Internal Memory
      */
-    override fun getContent(fileName: String) : JsonElement?{
+    actual fun getContent(fileName: String) : String?{
 
         val file = getTargetFile(fileName)
 
         if (file != null && file.exists()) {
             // Read File Contents
-            val inputAsString = FileInputStream(file).bufferedReader().use { it.readText() }
             // return File Contents
-            return json.decodeFromString(inputAsString)
+            return FileInputStream(file).bufferedReader().use { it.readText() }
         }
 
         // Return null if file doesn't exist

@@ -1,8 +1,8 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'RCCachingManager'
-    spec.version       = "1.0.0"
+    spec.version       = "1.1.0"
     spec.homepage                 = 'https://github.com/rakeshchander/CachingLibrary-KMM'
-    spec.source       = { :http => "https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/1.0.0/RCCachingManager.xcframework.zip"}
+    spec.source       = { :http => "https://github.com/rakeshchander/CachingLibrary-KMM/releases/download/1.1.0/RCCachingManager.xcframework.zip"}
     spec.authors                  = 'rakeshchander.cse@gmail.com'
     spec.license                  = 'https://opensource.org/licenses/Apache-2.0'
     spec.summary                  = 'Caching Library for KMM, Android, iOS'

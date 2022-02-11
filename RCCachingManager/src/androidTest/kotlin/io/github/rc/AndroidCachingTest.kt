@@ -1,8 +1,6 @@
 package io.github.rc
 
 import android.content.Context
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -26,22 +24,12 @@ class AndroidCachingTest {
 
         Mockito.`when`(mMockContext!!.filesDir).thenReturn(mTempFolder.newFolder())
 
-        CachingAndroid.context = mMockContext
-    }
-
-
-    @Test
-    fun testActualLayer() {
-
-        val cachingMgr = CachingImpl
-
-        kotlin.test.assertTrue(cachingMgr.getLayer() is CachingAndroid)
-
+        RCCachingManager.context = mMockContext
     }
 
     @Test
     fun testCachingAndroidFileName() {
-        val manager = CachingAndroid()
+        val manager = RCCachingManager()
 
         val fileName = "rc-sample.txt"
 
@@ -52,16 +40,16 @@ class AndroidCachingTest {
 
     @Test
     fun testCachingAndroid() {
-        val manager = CachingAndroid()
+        val manager = RCCachingManager()
 
         val fileName = "rc-sample.txt"
 
-        manager.saveContent(fileName, JsonPrimitive("Test"))
+        manager.saveContent(fileName, "Test")
 
         val fileContents = manager.getContent(fileName)
 
         kotlin.test.assertTrue(fileContents != null)
-        kotlin.test.assertTrue(fileContents.jsonPrimitive.content == "Test")
+        kotlin.test.assertTrue(fileContents == "Test")
     }
 
 }

@@ -45,22 +45,12 @@ class AndroidPreferencesTest {
 
         Mockito.`when`(sharedPrefs.getString(testKeyName, null)).thenReturn(testString)
 
-        RCUserPreferencesAndroid.context = mMockContext
-    }
-
-
-    @Test
-    fun testActualLayer() {
-
-        val cachingMgr = RCUserPreferencesImpl
-
-        kotlin.test.assertTrue(cachingMgr.getLayer() is RCUserPreferencesAndroid)
-
+        RCUserPreferences.context = mMockContext
     }
 
     @Test
     fun testSharedPrefAndroid() {
-        val manager = RCUserPreferencesAndroid()
+        val manager = RCUserPreferences()
 
         manager.deletePref(testKeyName)
 
