@@ -7,7 +7,7 @@ import java.io.FileInputStream
 /**
  * Android Caching Layer
  */
-actual class CachingLayer actual constructor() {
+actual class RCCachingManager actual constructor() {
 
     companion object{
         var context : Context? = null

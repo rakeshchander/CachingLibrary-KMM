@@ -4,14 +4,11 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.encodeToJsonElement
 
 /**
  * Interface for Caching Layer
  */
-expect class CachingLayer() {
+expect class RCCachingManager() {
     fun saveContent(fileName: String, content: String)
     fun getContent(fileName: String) : String?
 }
@@ -24,7 +21,7 @@ val jsonParser = Json { prettyPrint = true; isLenient = true; ignoreUnknownKeys 
 /**
  * Default Implementation for Caching Layer Interface methods
  */
-inline fun <reified T> CachingLayer.getSerializedData(fileName: String) : @Serializable T? {
+inline fun <reified T> RCCachingManager.getSerializedData(fileName: String) : @Serializable T? {
     val content = getContent(fileName)
     return content?.let { jsonParser.decodeFromString<T>(it) }
 }
@@ -32,7 +29,7 @@ inline fun <reified T> CachingLayer.getSerializedData(fileName: String) : @Seria
 /**
  * Default Implementation for Caching Layer Interface methods
  */
-inline fun <reified T> CachingLayer.putSerializedData(fileName: String, content: @Serializable T) {
+inline fun <reified T> RCCachingManager.putSerializedData(fileName: String, content: @Serializable T) {
     val jsonContent = jsonParser.encodeToString(content)
     saveContent(fileName, jsonContent)
 }

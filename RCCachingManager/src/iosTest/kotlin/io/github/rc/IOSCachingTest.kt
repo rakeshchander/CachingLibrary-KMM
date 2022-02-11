@@ -1,7 +1,5 @@
 package io.github.rc
 
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonPrimitive
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -9,7 +7,7 @@ class IOSCachingTest {
 
     @Test
     fun testCachingIOSFileName() {
-        val manager = CachingLayer()
+        val manager = RCCachingManager()
 
         val fileName = "rc-sample.txt"
 
@@ -21,7 +19,7 @@ class IOSCachingTest {
 
     @Test
     fun testCachingIOS() {
-        val manager = CachingLayer()
+        val manager = RCCachingManager()
 
         val fileName = "rc-sample.txt"
 

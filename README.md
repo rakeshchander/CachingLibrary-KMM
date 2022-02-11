@@ -5,16 +5,34 @@
 
 ![](https://maven-badges.herokuapp.com/maven-central/io.github.rakeshchander/RCCachingManager/badge.svg) ![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat) ![](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square) ![](https://img.shields.io/cocoapods/v/RCCachingManager.svg)
 
+![](https://github.com/rakeshchander/CachingLibrary-KMM/actions/workflows/main.yml/badge.svg)
 
-- **Supports iOS & Android apps**
-  - **Android version 26 & above**
-  - **iOS version 12 & Above**
-  - **Apple TvOS version 13 & Above**
-  - **Apple WatchOS version 7 & Above**
+### SAVE / READ Serialized Objects / Standard Data Types (String, Int, Data, Boolean, FLoat, Decimal, Array, Map) in User Preferences OR App Internal Storage
+
+- **Supports KMM, iOS & Android apps**
+  - Android version 26 & above
+  - iOS version 12 & Above
+  - Apple TvOS version 13 & Above
+  - Apple WatchOS version 7 & Above
 
 
 
 ## Installation
+
+##### KMM
+
+Module level build.gradle
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.rakeshchander:RCCachingManager:<version>'
+}
+```
+ 
 
 ##### Android 
 ###### Kotlin 
@@ -109,6 +127,37 @@ carthage update --use-xcframework
 
 ## Usage
 
+#### Caching Manager - App Internal Storage
+- You can save/ read String Data 
+- You can save/ read Serailzable Class Objects
+
+```kotlin
+// Instantiate Caching Manager
+val cachingLayer = RCCachingManager()
+
+// Save String Content
+cachingLayer.saveContent("AppMetaData", dataModel)
+// Read String Content
+val content = cachingLayer.getContent("AppMetaData")
+
+// Save Serialzed Objects
+cachingLayer.putSerializedData("AppMetaData", dataModel)
+// Read Serialized Objects
+val dataModel = cachingLayer.getSerializedData("AppMetaData")
+```
+
+#### Shared Preferences / User Defaults
+- You can save/ read Supported Data types in Shared Prefrences / User Defaults
+
+```kotlin
+// Instantiate Preferences Manager
+val prefLayer = RCUserPreferences()
+
+// Save Content
+prefLayer.setPrefValue("AppMetaData", dataModel)
+// Read Content
+val content = prefLayer.setPrefValue("AppMetaData")
+```
 
 
 ## License

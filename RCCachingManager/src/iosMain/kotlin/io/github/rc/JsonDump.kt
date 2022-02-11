@@ -5,7 +5,7 @@ import platform.Foundation.*
 /**
  * This is actual implementation of Caching Layer in iOS
  */
-actual class CachingLayer actual constructor() {
+actual class RCCachingManager actual constructor() {
 
     init {
         // For Public Access
