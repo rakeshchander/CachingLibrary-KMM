@@ -17,33 +17,43 @@ actual class RCUserPreferences actual constructor() {
     actual fun <T> setPrefValue(keyName: String, value: T) {
 
         if (context != null) {
+
+            println(keyName)
+            println(value)
+
             val prefs : SharedPreferences = context!!.getSharedPreferences("", MODE_PRIVATE)
             val editor = prefs.edit()
 
             if (value is Int) {
+                println("Int")
                 editor.putInt(keyName, value)
                 return
             }
 
             if (value is String) {
+                println("String")
                 editor.putString(keyName, value)
                 return
             }
 
             if (value is Boolean) {
+                println("Boolean")
                 editor.putBoolean(keyName, value)
                 return
             }
 
             if (value is Float) {
+                println("Float")
                 editor.putFloat(keyName, value)
                 return
             }
 
             if (value is Long) {
+                println("Long")
                 editor.putLong(keyName, value)
                 return
             }
+
             throw Exception("Unhandled data type")
         }
 
@@ -56,6 +66,15 @@ actual class RCUserPreferences actual constructor() {
             val editor = prefs.edit()
             editor.remove(keyName)
             return
+        }
+
+        throw Exception("Context Not Initialized")
+    }
+
+    actual fun getAll() : Map<String, *> {
+        if (context != null) {
+            val prefs : SharedPreferences = context!!.getSharedPreferences("", MODE_PRIVATE)
+            return prefs.all
         }
 
         throw Exception("Context Not Initialized")

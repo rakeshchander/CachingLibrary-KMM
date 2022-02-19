@@ -41,6 +41,21 @@ actual class RCUserPreferences actual constructor() {
         val prefs : NSUserDefaults = NSUserDefaults.standardUserDefaults
         prefs.removeObjectForKey(keyName)
     }
+
+    actual fun getAll() : Map<String, *> {
+        val prefs : NSUserDefaults = NSUserDefaults.standardUserDefaults
+        val content = prefs.dictionaryRepresentation()
+
+        val hashMap : HashMap<String, Any?> = HashMap()
+
+        for (item in content.keys){
+            if (item is String)
+                hashMap[item] = content[item]
+        }
+
+        return hashMap
+
+    }
 }
 
 actual inline fun <reified T> RCUserPreferences.getPrefValue(keyName: String): T? {
